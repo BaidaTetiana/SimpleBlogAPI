@@ -1,0 +1,11 @@
+{"signup":{"username":"firstuser","email":"firstuser@test.com","password":"qwueyquif"}}
+{"login":{"username":"firstuser","password":"qwueyquif"}}
+{"posts_create":{"name":"Some post 1","full_text":"Post 1 text","user_id":4}}
+{"posts_create":{"name":"Some post 2","full_text":"Post 2 text","user_id":4}}
+{"post_like":{"id":3,"likes":1}}
+{"post_like":{"id":3,"likes":1}}
+{"post_like":{"id":3,"likes":1}}
+{"post_like":{"id":3,"likes":1}}
+{"post_like":{"id":4,"likes":1}}
+{"post_like":{"id":4,"likes":1}}
+{"signup":{"username":"seconduser","email":"seconduser@test.com","password":"qwufrkgvf"}}
