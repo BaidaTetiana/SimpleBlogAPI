@@ -2,4 +2,4 @@ django==1.11.18
 djangorestframework
 djangorestframework-jwt
 psycopg2
-coreapi
+urllib3
