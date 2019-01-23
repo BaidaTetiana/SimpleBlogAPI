@@ -9,6 +9,7 @@ class Command(BaseCommand):
 	help = 'automated bot activity'
 	args = ''
 
+	INFO = 'info'
 	SIGNUP = 'signup'
 	LOGIN = 'login'
 	CREATE = 'posts_create'
@@ -30,10 +31,19 @@ class Command(BaseCommand):
 		auth_token = ''
 
 		for command in self.json_commands(file):
-			if command.get(Command.SIGNUP, None):
+			if command.get(Command.INFO, None) is not None:
+				r = http.request(
+					'GET',
+					'http://127.0.0.1:8000/users/',
+					headers={
+						'Content-Type': 'application/json'
+					}
+				)
+				print r.data
+			elif command.get(Command.SIGNUP, None):
 				r = http.request(
 					'POST',
-					'http://127.0.0.1:8000/signup/',
+					'http://127.0.0.1:8000/users/',
 					body = json.dumps(command.get(Command.SIGNUP, {})).encode('utf-8'),
 					headers={
 						'Content-Type': 'application/json'

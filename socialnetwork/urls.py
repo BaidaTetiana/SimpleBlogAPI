@@ -22,7 +22,7 @@ from rest_framework_jwt.views import verify_jwt_token
 from socialnetworkapp.views import *
 
 urlpatterns = [
-	url(r'^signup/', sign_up, name='sign_up'),
+	url(r'^users/', UserList.as_view(), name='user-list'),
     url(r'^post/(?P<pk>.+)/', PostDetail.as_view(), name='post-one'),
 	url(r'^posts', PostList.as_view(), name='post-list'),
 ]
