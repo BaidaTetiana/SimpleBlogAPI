@@ -3,3 +3,4 @@ djangorestframework
 djangorestframework-jwt
 psycopg2
 urllib3
+django-cors-headers

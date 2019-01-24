@@ -12,7 +12,7 @@ class Command(BaseCommand):
 	INFO = 'info'
 	SIGNUP = 'signup'
 	LOGIN = 'login'
-	CREATE = 'posts_create'
+	CREATE = 'post_create'
 	LIKE = 'post_like'
 	UNLIKE = 'post_unlike'
 
@@ -27,65 +27,23 @@ class Command(BaseCommand):
 
 	def handle(self, *args, **options):
 		http = urllib3.PoolManager()
-		file = os.path.join(os.path.dirname(__file__), 'bot_file.json')
+		server = 'http://127.0.0.1:8000'
 		auth_token = ''
-
+		file = os.path.join(os.path.dirname(__file__), 'bot_file.json')
 		for command in self.json_commands(file):
-			if command.get(Command.INFO, None) is not None:
-				r = http.request(
-					'GET',
-					'http://127.0.0.1:8000/users/',
-					headers={
-						'Content-Type': 'application/json'
-					}
-				)
+			headers = {
+				'Content-Type': 'application/json',
+			}
+			if auth_token:
+				headers.update({
+					'Authorization' : 'Bearer %s' % auth_token
+				})
+			r = http.request(
+				command.get(command.keys()[0], {}).get('method', 'GET'),
+				'%s%s' % (server, command.get(command.keys()[0], {}).get('url', '/')),
+				body = json.dumps(command.get(command.keys()[0], {}).get('params', {})).encode('utf-8'),
+				headers=headers
+			)
+			auth_token = json.loads(r.data.decode('utf-8')).get('token', auth_token)
+			if command.get(INFO, None) is not None:
 				print r.data
-			elif command.get(Command.SIGNUP, None):
-				r = http.request(
-					'POST',
-					'http://127.0.0.1:8000/users/',
-					body = json.dumps(command.get(Command.SIGNUP, {})).encode('utf-8'),
-					headers={
-						'Content-Type': 'application/json'
-					}
-				)
-			elif command.get(Command.LOGIN, None):
-				r = http.request(
-					'POST',
-					'http://127.0.0.1:8000/token/login/',
-					body = json.dumps(command.get(Command.LOGIN, {})).encode('utf-8'),
-					headers={
-						'Content-Type': 'application/json'
-					}
-				)
-				auth_token = json.loads(r.data.decode('utf-8')).get('token', '')
-			elif command.get(Command.CREATE, None):
-				r = http.request(
-					'POST',
-					'http://127.0.0.1:8000/posts/',
-					body = json.dumps(command.get(Command.CREATE, {})).encode('utf-8'),
-					headers={
-						'Content-Type': 'application/json',
-						'Authorization' : 'Bearer %s' % auth_token
-					}
-				)
-			elif command.get(Command.LIKE, None):
-				r = http.request(
-					'PUT',
-					'http://127.0.0.1:8000/post/%d/' % int(command.get(Command.LIKE, {}).get('id', {})),
-					body = json.dumps(command.get(Command.LIKE, {}).get('params', {})).encode('utf-8'),
-					headers={
-						'Content-Type': 'application/json',
-						'Authorization' : 'Bearer %s' % auth_token
-					}
-				)
-			else:
-				r = http.request(
-					'PUT',
-					'http://127.0.0.1:8000/post/%d/' % int(command.get(Command.UNLIKE, {}).get('id', {})),
-					body = json.dumps(command.get(Command.UNLIKE, {}).get('params', {})).encode('utf-8'),
-					headers={
-						'Content-Type': 'application/json',
-						'Authorization' : 'Bearer %s' % auth_token
-					}
-				)

@@ -1,11 +1,12 @@
-{"signup":{"username":"thirduser","email":"thirduser@test.com","password":"ifg3u4gtu893"}}
-{"login":{"username":"thirduser","password":"ifg3u4gtu893"}}
-{"posts_create":{"name":"Some post 3","full_text":"Post 3 text","user_id":6}}
-{"posts_create":{"name":"Some post 4","full_text":"Post 4 text","user_id":5}}
-{"post_like":{"id":13,"params":{"likes":1}}}
-{"post_like":{"id":13,"params":{"likes":1}}}
-{"post_like":{"id":13,"params":{"likes":1}}}
-{"post_like":{"id":13,"params":{"likes":1}}}
-{"post_like":{"id":12,"params":{"likes":1}}}
-{"post_unlike":{"id":12,"params":{"likes":-1}}}
-{"info":{}}
+{"signup":{"method":"POST","url":"/users/","params":{"username":"forthuser","email":"forthuser@test.com","password":"ifg3u4gtu893"}}}
+{"login":{"method":"POST","url":"/token/login/","params":{"username":"forthuser","password":"ifg3u4gtu893"}}}
+{"post_create":{"method":"POST","url":"/posts/","params":{"name":"Some post 5","full_text":"Post 5 text","user_id":7}}}
+{"post_create":{"method":"POST","url":"/posts/","params":{"name":"Some post 6","full_text":"Post 6 text","user_id":7}}}
+{"post_like":{"method":"PUT","url":"/post/14/","params":{"likes":1}}}
+{"post_like":{"method":"PUT","url":"/post/14/","params":{"likes":1}}}
+{"post_like":{"method":"PUT","url":"/post/14/","params":{"likes":1}}}
+{"post_like":{"method":"PUT","url":"/post/14/","params":{"likes":1}}}
+{"post_like":{"method":"PUT","url":"/post/14/","params":{"likes":1}}}
+{"post_like":{"method":"PUT","url":"/post/15/","params":{"likes":1}}}
+{"post_unlike":{"method":"PUT","url":"/post/14/","params":{"likes":-1}}}
+{"info":{"method":"GET","url":"/users/","params":{}}}
